@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<plugin xmlns="http://apache.org/cordova/ns/plugins/1.0"
+    id="io.applink.cordova.AppLinkIOPlugin"
+    version="1.0.0">
+    <name>AppLink.io</name>
+    <description>AppLink.io SDK Plugin for Cordova</description>
+    <license>Apache 2.0</license>
+    <keywords>applink,analytics,performance,marketing,engagement</keywords>
+
+    <!-- android -->
+    <platform name="android">
+    <js-module src="www/applinkio.js" name="AppLinkIO">
+        <clobbers target="AppLinkIO" />
+    </js-module>
+
+    <engines>
+        <engine name="cordova" version=">=3.0.0" />
+    </engines>
+
+    <platform name="ios">
+
+        <config-file target="config.xml" parent="/*">
+            <feature name="AppLinkIOPlugin">
+                <param name="ios-package" value="AppLinkIOPlugin"/>
+            </feature>
+        </config-file>
+
+        <header-file src="src/ios/AppLinkIOPlugin.h" />
+        <source-file src="src/ios/AppLinkIOPlugin.m" />
+
+        <framework src="AppLinkIO" type="podspec" spec="~> 1.1.2" />
+
+    </platform>
+
+    <platform name="android">
+        <config-file target="config.xml" parent="/*">
+            <feature name="AppLinkIOPlugin" >
+                <param name="android-package" value="io.applink.cordova.AppLinkIOPlugin"/>
+            </feature>
+        </config-file>
+
+        <framework src="src/android/plugin.gradle" custom="true" type="gradleReference"/>
+
+        <source-file src="src/android/AppLinkIOPlugin.java" target-dir="src/io/applink/cordova/" />
+    </platform>
+
+</plugin>

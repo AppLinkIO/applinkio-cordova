@@ -1,0 +1,38 @@
+{
+  "name": "applinkio-cordova",
+  "version": "1.0.0",
+  "description": "AppLink.io SDK Plugin for Cordova",
+  "cordova": {
+    "id": "io.applink.cordova.AppLinkIOPlugin",
+    "platforms": [
+      "ios",
+      "android"
+    ]
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/AppLinkIO/applinkio-cordova.git"
+  },
+  "keywords": [
+    "applink.io",
+    "ecosystem:cordova",
+    "cordova-ios",
+    "cordova-android",
+    "analytics",
+    "apm",
+    "marketing",
+    "engagement"
+  ],
+  "engines": [
+    {
+      "name": "cordova",
+      "version": ">=3.0.0"
+    }
+  ],
+  "author": "AppLink.io",
+  "license": "SEE LICENSE IN 'LICENSE' file",
+  "bugs": {
+    "url": "https://github.com/AppLinkIO/applinkio-cordova/issues"
+  },
+  "homepage": "https://applink.io/"
+}
