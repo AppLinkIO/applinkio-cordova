@@ -2,14 +2,12 @@
 
 <plugin xmlns="http://apache.org/cordova/ns/plugins/1.0"
     id="io.applink.cordova.AppLinkIOPlugin"
-    version="1.0.0">
+    version="1.0.1">
     <name>AppLink.io</name>
     <description>AppLink.io SDK Plugin for Cordova</description>
     <license>Apache 2.0</license>
     <keywords>applink,analytics,performance,marketing,engagement</keywords>
 
-    <!-- android -->
-    <platform name="android">
     <js-module src="www/applinkio.js" name="AppLinkIO">
         <clobbers target="AppLinkIO" />
     </js-module>
@@ -29,7 +27,7 @@
         <header-file src="src/ios/AppLinkIOPlugin.h" />
         <source-file src="src/ios/AppLinkIOPlugin.m" />
 
-        <framework src="AppLinkIO" type="podspec" spec="~> 1.1.2" />
+        <framework src="AppLinkIO" type="podspec" spec="~> 1.1.4" />
 
     </platform>
 
