@@ -11,8 +11,7 @@
 #import <Cordova/CDVAvailability.h>
 
 
-@import AppLinkIO;
-
+#import <AppLinkIO/AppLinkIO.h>
 
 @implementation AppLinkIOPlugin
 
