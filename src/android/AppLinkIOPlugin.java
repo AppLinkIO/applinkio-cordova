@@ -135,4 +135,50 @@ public class AppLinkIOPlugin extends CordovaPlugin {
     return false;
   }
 
+    /*******************
+     * Private Methods
+     ******************/
+    private boolean isNotNull(JSONArray jsonArray, int index) throws JSONException {
+        return jsonArray != null && jsonArray.length() > index && !jsonArray.isNull(index);
+    }
+
+
+
+    private String optString(JSONArray jsonArray, int index) throws JSONException {
+        if (isNotNull(jsonArray, index)) {
+            return jsonArray.getString(index);
+        }
+
+        return null;
+    }
+
+
+
+    private HashMap<String, String> optStringMap(JSONArray jsonArray, int index) throws JSONException {
+        if (isNotNull(jsonArray, index)) {
+            return convertToStringMap(jsonArray.getJSONObject(index));
+        }
+
+        return null;
+    }
+
+
+    private HashMap<String, String> convertToStringMap(JSONObject jsonObject) throws JSONException {
+        HashMap<String, String> map = null;
+        if (jsonObject != null && jsonObject.length() > 0) {
+            map = new HashMap<String, String>();
+            Iterator<?> keys = jsonObject.keys();
+            while (keys.hasNext()) {
+                String key = (String) keys.next();
+                String value = jsonObject.getString(key);
+                map.put(key, value);
+            }
+        }
+
+        return map;
+    }
+
+        
+
+
 }
