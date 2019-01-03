@@ -55,11 +55,11 @@ public class AppLinkIOPlugin extends CordovaPlugin {
   public boolean execute(String action, JSONArray args, final CallbackContext callbackContext) throws JSONException {
 
     if (action.equals("initAppLinkIO")) {
-        String appToken = optString(args, 0);
-        AppLinkIO.initAppLinkIO(cordova.getActivity().getApplicationContext(), appToken);
+        String projectToken = optString(args, 0);
+        AppLinkIO.initAppLinkIO(cordova.getActivity().getApplicationContext(), projectToken);
         callbackContext.success();
         return true;
-    } else if (action.equals("initAppLinkIOWithOptions")) {
+    }/* else if (action.equals("initAppLinkIOWithOptions")) {
       if (args.length() == 2) {
         String appToken = optString(args, 0);
         Map<String, String> appOptions = optStringMap(args, 1);
@@ -150,6 +150,7 @@ public class AppLinkIOPlugin extends CordovaPlugin {
       callbackContext.success();
       return true;      
     }
+    */
     return false;
   }
 

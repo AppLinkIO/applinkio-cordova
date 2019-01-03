@@ -10,6 +10,7 @@
 }
 
 - (void)initAppLinkIO:(CDVInvokedUrlCommand *)command;
+/*
 - (void)initAppLinkIOWithOptions:(CDVInvokedUrlCommand *)command;
 - (void)unlinkAppLinkIO:(CDVInvokedUrlCommand *)command;
 - (void)linkUser:(CDVInvokedUrlCommand *)command;
@@ -22,5 +23,5 @@
 - (void)trackInteraction:(CDVInvokedUrlCommand *)command;
 - (void)trackConversion:(CDVInvokedUrlCommand *)command;
 - (void)trackSearch:(CDVInvokedUrlCommand *)command;
-
+*/
 @end

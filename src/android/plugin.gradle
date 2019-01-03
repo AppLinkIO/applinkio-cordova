@@ -4,5 +4,5 @@ repositories {
 
 dependencies {
     compile 'com.android.support:appcompat-v7:23.4.0'
-    compile 'io.applink.android:applinkio:1.1.2'
+    compile 'io.applink.android:applinkio:2.1.5'
 }

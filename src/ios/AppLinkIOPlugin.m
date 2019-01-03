@@ -18,17 +18,18 @@
 
 
 - (void)initAppLinkIO:(CDVInvokedUrlCommand *)command {
-    NSString *appToken = nil;
+    NSString *projectToken = nil;
 
     if ([command argumentAtIndex:0]) {
-        appToken = [command argumentAtIndex:0];
+        projectToken = [command argumentAtIndex:0];
     }
 
-    if (appToken) {
-        [AppLinkIO initAppLinkIO:appToken];
+    if (projectToken) {
+        [AppLinkIO initAppLinkIO:projectToken];
     }
 }
 
+/*
 - (void)initAppLinkIOWithOptions:(CDVInvokedUrlCommand *)command {
 
     if ([command.arguments count] == 2) {
@@ -156,6 +157,7 @@
         [AppLinkIO trackSearch:searchDetails];
     }
 }
+*/
 
 
 @end
