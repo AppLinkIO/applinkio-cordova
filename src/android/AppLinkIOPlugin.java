@@ -55,38 +55,133 @@ public class AppLinkIOPlugin extends CordovaPlugin {
   public boolean execute(String action, JSONArray args, final CallbackContext callbackContext) throws JSONException {
 
     if (action.equals("initAppLinkIO")) {
-        String projectToken = optString(args, 0);
-        AppLinkIO.initAppLinkIO(cordova.getActivity().getApplicationContext(), projectToken);
-        callbackContext.success();
+
+      cordova.getThreadPool().execute(new Runnable() {
+            public void run() {
+              String projectToken = optString(args, 0);
+              AppLinkIO.initAppLinkIO(cordova.getActivity().getApplicationContext(), projectToken);
+              callbackContext.success();              
+            }
+        }); 
         return true;
-    }/* else if (action.equals("initAppLinkIOWithOptions")) {
+    } else if (action.equals("initAppLinkIOWithOptions")) {
+      
       if (args.length() == 2) {
-        String appToken = optString(args, 0);
-        Map<String, String> appOptions = optStringMap(args, 1);
-        AppLinkIO.initAppLinkIOWithOptions(cordova.getActivity().getApplicationContext(), appToken, appOptions);
-        callbackContext.success();
+
+          cordova.getThreadPool().execute(new Runnable() {
+              public void run() {
+                 // Thread-safe.
+                String projectToken = optString(args, 0);
+                Map<String, String> appOptions = optStringMap(args, 1);
+                AppLinkIO.initAppLinkIOWithOptions(cordova.getActivity().getApplicationContext(), projectToken, projectOptions);
+                callbackContext.success();              
+              }
+          }); 
       } else {
-        callbackContext.error("Requires String appToken, Map<String, String> appOptions.");
+        callbackContext.error("Requires String projectToken, Map<String, String> projectOptions.");
       }
       return true;
-    } else if (action.equals("unlinkAppLinkIO")) {
-      AppLinkIO.unlinkAppLinkIO();
+    } else if (action.equals("startSession")) {
+      AppLinkIO.startSession();
+      callbackContext.success();
+      return true;
+    } else if (action.equals("stopSession")) {
+      AppLinkIO.stopSession();
       callbackContext.success();
       return true;
     } else if (action.equals("linkUser")) {
-      String userEmailAddress = optString(args, 0);
-      AppLinkIO.linkUser(userEmailAddress);
+
+      if (args.length() == 2) {
+        String userIdentifier = optString(args, 0);
+        String identifierType = optString(args, 1);
+        AppLinkIO.linkUser(userIdentifier, identifierType);
+        callbackContext.success();
+      } else {
+        callbackContext.error("Requires String userIdentifier, String identifierType.");
+      }
+      return true;
+    } else if (action.equals("unlinkUser")) {
+      AppLinkIO.unlinkUser();
       callbackContext.success();
-      return true;      
+      return true;
     } else if (action.equals("setUserAttribute")) {
 
       if (args.length() == 2) {
-        String attributeName = optString(args, 0);
-        String attributeValue = optString(args, 1);
-        AppLinkIO.setUserAttribute(attributeName, attributeValue);
+        String attribute = optString(args, 0);
+        String value = optString(args, 1);
+        AppLinkIO.setUserAttribute(attribute, value);
         callbackContext.success();
       } else {
-        callbackContext.error("Requires String attributeName, String attributeValue.");
+        callbackContext.error("Requires String attribute, String value.");
+      }
+      return true;
+    } else if (action.equals("incrementUserAttribute")) {
+
+      if (args.length() == 2) {
+        String attribute = optString(args, 0);
+        String value = optString(args, 1);
+        AppLinkIO.incrementUserAttribute(attribute, Integer.valueOf(value));
+        callbackContext.success();
+      } else {
+        callbackContext.error("Requires String attribute, String value.");
+      }
+      return true;
+    } else if (action.equals("decrementUserAttribute")) {
+
+      if (args.length() == 2) {
+        String attribute = optString(args, 0);
+        String value = optString(args, 1);
+        AppLinkIO.decrementUserAttribute(attribute, Integer.valueOf(value));
+        callbackContext.success();
+      } else {
+        callbackContext.error("Requires String attribute, String value.");
+      }
+      return true;
+    }  else if (action.equals("linkCompany")) {
+
+      if (args.length() == 1) {
+        String companyName = optString(args, 0); 
+        AppLinkIO.linkCompany(companyName);
+        callbackContext.success();
+      } else {
+        callbackContext.error("Requires String companyName.");
+      }
+      return true;
+    } else if (action.equals("unlinkCompany")) {
+      AppLinkIO.unlinkCompany();
+      callbackContext.success();
+      return true;
+    } else if (action.equals("setCompanyAttribute")) {
+
+      if (args.length() == 2) {
+        String attribute = optString(args, 0);
+        String value = optString(args, 1);
+        AppLinkIO.setCompanyAttribute(attribute, value);
+        callbackContext.success();
+      } else {
+        callbackContext.error("Requires String attribute, String value.");
+      }
+      return true;
+    } else if (action.equals("incrementCompanyAttribute")) {
+
+      if (args.length() == 2) {
+        String attribute = optString(args, 0);
+        String value = optString(args, 1);
+        AppLinkIO.incrementCompanyAttribute(attribute, Integer.valueOf(value));
+        callbackContext.success();
+      } else {
+        callbackContext.error("Requires String attribute, String value.");
+      }
+      return true;
+    } else if (action.equals("decrementCompanyAttribute")) {
+
+      if (args.length() == 2) {
+        String attribute = optString(args, 0);
+        Integer value = optString(args, 1);
+        AppLinkIO.decrementCompanyAttribute(attribute, Integer.valueOf(value));
+        callbackContext.success();
+      } else {
+        callbackContext.error("Requires String attribute, String value.");
       }
       return true;
     } else if (action.equals("trackScreenView")) {
@@ -94,14 +189,14 @@ public class AppLinkIOPlugin extends CordovaPlugin {
       AppLinkIO.trackScreenView(screenName);
       callbackContext.success();
       return true;
-    } else if (action.equals("trackScreenViewWithExtras")) {
+    } else if (action.equals("trackScreenViewWithAttributes")) {
       if (args.length() == 2) {
         String screenName = optString(args, 0);
-        Map<String, String> screenExtras = optStringMap(args, 1);
-        AppLinkIO.trackScreenViewWithOptions(screenName, screenExtras);
+        Map<String, String> attributes = optStringMap(args, 1);
+        AppLinkIO.trackScreenView(screenName, attributes);
         callbackContext.success();
       } else {
-        callbackContext.error("Requires String screenName, Map<String, String> screenExtras.");
+        callbackContext.error("Requires String screenName, Map<String, String> attributes.");
       }
       return true;      
     } else if (action.equals("trackEvent")) {
@@ -109,48 +204,17 @@ public class AppLinkIOPlugin extends CordovaPlugin {
       AppLinkIO.trackEvent(eventName);
       callbackContext.success();
       return true;
-    } else if (action.equals("trackEventWithExtras")) {
+    } else if (action.equals("trackEventWithAttributes")) {
       if (args.length() == 2) {
         String eventName = optString(args, 0);
-        Map<String, String> eventExtras = optStringMap(args, 1);
-        AppLinkIO.trackEventWithOptions(eventName, eventExtras);
+        Map<String, String> attributes = optStringMap(args, 1);
+        AppLinkIO.trackEvent(eventName, attributes);
         callbackContext.success();
       } else {
-        callbackContext.error("Requires String eventName, Map<String, String> eventExtras.");
+        callbackContext.error("Requires String eventName, Map<String, String> attributes.");
       }
       return true;    
-    } else if (action.equals("trackImpression")) {
-      Map<String, String> displayDetails = optStringMap(args, 0);
-      AppLinkIO.trackImpression(displayDetails);
-      callbackContext.success();
-      return true;      
-    } else if (action.equals("trackInteraction")) {
-      if (args.length() == 2) {
-        Map<String, String> displayDetails = optStringMap(args, 0);
-        String interactionType = optString(args, 1);
-        AppLinkIO.trackInteraction(displayDetails, interactionType);
-        callbackContext.success();
-      } else {
-        callbackContext.error("Requires Map<String, String> displayDetails, String interactionType.");
-      }
-      return true; 
-    } else if (action.equals("trackConversion")) {
-      if (args.length() == 2) {
-        Map<String, String> displayDetails = optStringMap(args, 0);
-        Map<String, String> conversionDetails = optStringMap(args, 1);
-        AppLinkIO.trackConversion(displayDetails, conversionDetails);
-        callbackContext.success();
-      } else {
-        callbackContext.error("Requires Map<String, String> displayDetails, Map<String, String> conversionDetails.");
-      }
-      return true; 
-    } else if (action.equals("trackSearch")) {
-      Map<String, String> searchDetails = optStringMap(args, 0);
-      AppLinkIO.trackSearch(searchDetails);
-      callbackContext.success();
-      return true;      
-    }
-    */
+    }  
     return false;
   }
 

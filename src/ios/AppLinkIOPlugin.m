@@ -17,58 +17,141 @@
 
 
 
+
 - (void)initAppLinkIO:(CDVInvokedUrlCommand *)command {
     NSString *projectToken = nil;
 
-    if ([command argumentAtIndex:0]) {
-        projectToken = [command argumentAtIndex:0];
-    }
+       [self.commandDelegate runInBackground:^{
 
-    if (projectToken) {
-        [AppLinkIO initAppLinkIO:projectToken];
-    }
+            if ([command argumentAtIndex:0]) {
+                projectToken = [command argumentAtIndex:0];
+            }
+
+            if (projectToken) {
+                [AppLinkIO initAppLinkIO:projectToken];
+            }        
+        }];
+
+
 }
 
-/*
 - (void)initAppLinkIOWithOptions:(CDVInvokedUrlCommand *)command {
 
-    if ([command.arguments count] == 2) {
-        NSString *appToken = [command argumentAtIndex:0];
-        NSDictionary *appOptions = [command argumentAtIndex:1];
+       [self.commandDelegate runInBackground:^{
 
-        [AppLinkIO initAppLinkIO:appToken withOptions:appOptions];
-    }
+            if ([command.arguments count] == 2) {
+                NSString *projectToken = [command argumentAtIndex:0];
+                NSDictionary *projectOptions = [command argumentAtIndex:1];
+
+                [AppLinkIO initAppLinkIO:projectToken withOptions:projectOptions];
+            }    
+        }]; 
+} 
+
+- (void)startSession:(CDVInvokedUrlCommand *)command {
+
+  [AppLinkIO startSession];
 }
+ 
+- (void)stopSession:(CDVInvokedUrlCommand *)command {
 
-- (void)unlinkAppLinkIO:(CDVInvokedUrlCommand *)command {
-
-  [AppLinkIO unlinkAppLinkIO];
+  [AppLinkIO stopSession];
 }
 
 - (void)linkUser:(CDVInvokedUrlCommand *)command {
-    NSString *userEmailAddress = nil;
 
-    if ([command argumentAtIndex:0]) {
-        userEmailAddress = [command argumentAtIndex:0];
-    }
+    if ([command.arguments count] == 2) {
+        NSString *userIdentifier = [command argumentAtIndex:0];
+        NSString *identifierType = [command argumentAtIndex:1];
 
-    if (userEmailAddress) {
-        [AppLinkIO linkUser:userEmailAddress];
+        [AppLinkIO linkUser:userIdentifier byType:identifierType];
     }
+}
+
+- (void)unlinkUser:(CDVInvokedUrlCommand *)command {
+
+  [AppLinkIO unlinkUser];
 }
 
 
 - (void)setUserAttribute:(CDVInvokedUrlCommand *)command {
 
     if ([command.arguments count] == 2) {
-        NSString *attributeName = [command argumentAtIndex:0];
-        NSString *attributeValue = [command argumentAtIndex:1];
+        NSString *attribute = [command argumentAtIndex:0];
+        NSString *value = [command argumentAtIndex:1];
 
-        [AppLinkIO setUserAttribute:attributeName withValue:attributeValue];
+        [AppLinkIO setUserAttribute:attribute byType:value];
+    }
+}
+ 
+- (void)incrementUserAttribute:(CDVInvokedUrlCommand *)command {
+
+    if ([command.arguments count] == 2) {
+        NSString *attribute = [command argumentAtIndex:0];
+        NSNumber *value = [command argumentAtIndex:1];
+
+        [AppLinkIO incrementUserAttribute:attribute withValue:value];
+    }
+}
+ 
+- (void)decrementUserAttribute:(CDVInvokedUrlCommand *)command {
+
+    if ([command.arguments count] == 2) {
+        NSString *attribute = [command argumentAtIndex:0];
+        NSNumber *value = [command argumentAtIndex:1];
+
+        [AppLinkIO decrementUserAttribute:attribute withValue:value];
     }
 }
 
 
+
+- (void)linkCompany:(CDVInvokedUrlCommand *)command {
+
+    if ([command.arguments count] == 1) {
+        NSString *companyName = [command argumentAtIndex:0]; 
+
+        [AppLinkIO linkCompany:companyName];
+    }
+}
+
+- (void)unlinkCompany:(CDVInvokedUrlCommand *)command {
+
+  [AppLinkIO unlinkCompany];
+}
+
+
+- (void)setCompanyAttribute:(CDVInvokedUrlCommand *)command {
+
+    if ([command.arguments count] == 2) {
+        NSString *attribute = [command argumentAtIndex:0];
+        NSString *value = [command argumentAtIndex:1];
+
+        [AppLinkIO setCompanyAttribute:attribute byType:value];
+    }
+}
+ 
+- (void)incrementCompanyAttribute:(CDVInvokedUrlCommand *)command {
+
+    if ([command.arguments count] == 2) {
+        NSString *attribute = [command argumentAtIndex:0];
+        NSNumber *value = [command argumentAtIndex:1];
+
+        [AppLinkIO incrementCompanyAttribute:attribute withValue:value];
+    }
+}
+ 
+- (void)decrementCompanyAttribute:(CDVInvokedUrlCommand *)command {
+
+    if ([command.arguments count] == 2) {
+        NSString *attribute = [command argumentAtIndex:0];
+        NSNumber *value = [command argumentAtIndex:1];
+
+        [AppLinkIO decrementCompanyAttribute:attribute withValue:value];
+    }
+}
+
+ 
 - (void)trackScreenView:(CDVInvokedUrlCommand *)command {
     NSString *screenName = nil;
 
@@ -81,13 +164,13 @@
     }
 }
 
-- (void)trackScreenViewWithExtras:(CDVInvokedUrlCommand *)command {
+- (void)trackScreenViewWithAttributes:(CDVInvokedUrlCommand *)command {
 
     if ([command.arguments count] == 2) {
         NSString *screenName = [command argumentAtIndex:0];
-        NSDictionary *screenExtras = [command argumentAtIndex:1];
+        NSDictionary *attributes = [command argumentAtIndex:1];
 
-        [AppLinkIO trackScreenView:screenName withExtras:screenExtras];
+        [AppLinkIO trackScreenView:screenName withAttributes:attributes];
     }
 }
 
@@ -103,61 +186,15 @@
     }
 }
 
-- (void)trackEventWithExtras:(CDVInvokedUrlCommand *)command {
+- (void)trackEventWithAttributes:(CDVInvokedUrlCommand *)command {
 
     if ([command.arguments count] == 2) {
         NSString *eventName = [command argumentAtIndex:0];
-        NSDictionary *eventExtras = [command argumentAtIndex:1];
+        NSDictionary *attributes = [command argumentAtIndex:1];
 
-        [AppLinkIO trackEvent:eventName withExtras:eventExtras];
+        [AppLinkIO trackEvent:eventName withAttributes:attributes];
     }
 }
-
-- (void)trackImpression:(CDVInvokedUrlCommand *)command {
-    NSDictionary *displayDetails = nil;
-
-    if ([command argumentAtIndex:0]) {
-        displayDetails = [command argumentAtIndex:0];
-    }
-
-    if (displayDetails) {
-        [AppLinkIO trackImpression:displayDetails];
-    }
-}
-
-- (void)trackInteraction:(CDVInvokedUrlCommand *)command {
-
-    if ([command.arguments count] == 2) {
-        NSDictionary *displayDetails = [command argumentAtIndex:0];
-        NSString *interactionType = [command argumentAtIndex:1];
-
-        [AppLinkIO trackInteraction:displayDetails :interactionType];
-    }
-}
-
-- (void)trackConversion:(CDVInvokedUrlCommand *)command {
-
-    if ([command.arguments count] == 2) {
-        NSDictionary *displayDetails = [command argumentAtIndex:0];
-        NSDictionary *conversionDetails = [command argumentAtIndex:1];
-
-        [AppLinkIO trackConversion:displayDetails :conversionDetails];
-    }
-}
-
-- (void)trackSearch:(CDVInvokedUrlCommand *)command {
-
-    NSDictionary *searchDetails = nil;
-
-    if ([command argumentAtIndex:0]) {
-        searchDetails = [command argumentAtIndex:0];
-    }
-
-    if (searchDetails) {
-        [AppLinkIO trackSearch:searchDetails];
-    }
-}
-*/
 
 
 @end

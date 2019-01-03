@@ -9,19 +9,23 @@
 @interface AppLinkIOPlugin : CDVPlugin {
 }
 
-- (void)initAppLinkIO:(CDVInvokedUrlCommand *)command;
-/*
+- (void)initAppLinkIO:(CDVInvokedUrlCommand *)command; 
 - (void)initAppLinkIOWithOptions:(CDVInvokedUrlCommand *)command;
-- (void)unlinkAppLinkIO:(CDVInvokedUrlCommand *)command;
+- (void)startSession:(CDVInvokedUrlCommand *)command;
+- (void)stopSession:(CDVInvokedUrlCommand *)command;
 - (void)linkUser:(CDVInvokedUrlCommand *)command;
+- (void)unlinkUser:(CDVInvokedUrlCommand *)command;
 - (void)setUserAttribute:(CDVInvokedUrlCommand *)command;
+- (void)incrementUserAttribute:(CDVInvokedUrlCommand *)command;
+- (void)decrementUserAttribute:(CDVInvokedUrlCommand *)command;
+- (void)linkCompany:(CDVInvokedUrlCommand *)command; 
+- (void)unlinkCompany:(CDVInvokedUrlCommand *)command;
+- (void)setCompanyAttribute:(CDVInvokedUrlCommand *)command;
+- (void)incrementCompanyAttribute:(CDVInvokedUrlCommand *)command;
+- (void)decrementCompanyAttribute:(CDVInvokedUrlCommand *)command;
 - (void)trackScreenView:(CDVInvokedUrlCommand *)command;
-- (void)trackScreenViewWithExtras:(CDVInvokedUrlCommand *)command;
+- (void)trackScreenViewWithAttributes:(CDVInvokedUrlCommand *)command;
 - (void)trackEvent:(CDVInvokedUrlCommand *)command;
-- (void)trackEventWithExtras:(CDVInvokedUrlCommand *)command;
-- (void)trackImpression:(CDVInvokedUrlCommand *)command;
-- (void)trackInteraction:(CDVInvokedUrlCommand *)command;
-- (void)trackConversion:(CDVInvokedUrlCommand *)command;
-- (void)trackSearch:(CDVInvokedUrlCommand *)command;
-*/
+- (void)trackEventWithAttributes:(CDVInvokedUrlCommand *)command;
+
 @end
