@@ -21,11 +21,12 @@
 - (void)initAppLinkIO:(CDVInvokedUrlCommand *)command {
     NSString *projectToken = nil;
 
-       [self.commandDelegate runInBackground:^{
-
             if ([command argumentAtIndex:0]) {
                 projectToken = [command argumentAtIndex:0];
             }
+
+       [self.commandDelegate runInBackground:^{
+ 
 
             if (projectToken) {
                 [AppLinkIO initAppLinkIO:projectToken];
@@ -37,15 +38,16 @@
 
 - (void)initAppLinkIOWithOptions:(CDVInvokedUrlCommand *)command {
 
+    if ([command.arguments count] == 2) {
+        NSString *projectToken = [command argumentAtIndex:0];
+        NSDictionary *projectOptions = [command argumentAtIndex:1];
+
        [self.commandDelegate runInBackground:^{
 
-            if ([command.arguments count] == 2) {
-                NSString *projectToken = [command argumentAtIndex:0];
-                NSDictionary *projectOptions = [command argumentAtIndex:1];
-
                 [AppLinkIO initAppLinkIO:projectToken withOptions:projectOptions];
-            }    
+           
         }]; 
+    }    
 } 
 
 - (void)startSession:(CDVInvokedUrlCommand *)command {
@@ -80,7 +82,7 @@
         NSString *attribute = [command argumentAtIndex:0];
         NSString *value = [command argumentAtIndex:1];
 
-        [AppLinkIO setUserAttribute:attribute byType:value];
+        [AppLinkIO setUserAttribute:attribute withValue:value];
     }
 }
  
@@ -127,7 +129,7 @@
         NSString *attribute = [command argumentAtIndex:0];
         NSString *value = [command argumentAtIndex:1];
 
-        [AppLinkIO setCompanyAttribute:attribute byType:value];
+        [AppLinkIO setCompanyAttribute:attribute withValue:value];
     }
 }
  

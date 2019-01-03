@@ -177,7 +177,7 @@ public class AppLinkIOPlugin extends CordovaPlugin {
 
       if (args.length() == 2) {
         String attribute = optString(args, 0);
-        Integer value = optString(args, 1);
+        String value = optString(args, 1);
         AppLinkIO.decrementCompanyAttribute(attribute, Integer.valueOf(value));
         callbackContext.success();
       } else {

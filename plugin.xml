@@ -3,7 +3,7 @@
 <plugin xmlns="http://apache.org/cordova/ns/plugins/1.0"
     id="io.applink.cordova.AppLinkIOPlugin"
     xmlns:android="http://schemas.android.com/apk/res/android"
-    version="1.5.2">
+    version="1.5.5">
     <name>AppLinkIO</name> 
     <description>AppLink.io SDK Plugin for Cordova</description>
     <license>Apache 2.0</license>

@@ -1,6 +1,6 @@
 {
   "name": "applinkio-cordova",
-  "version": "1.5.2",
+  "version": "1.5.5",
   "description": "AppLink.io SDK Plugin for Cordova",
   "cordova": {
     "id": "io.applink.cordova.AppLinkIOPlugin",
